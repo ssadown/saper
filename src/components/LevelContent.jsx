@@ -4,7 +4,6 @@ import { gameSettingsContext } from '../contexts/Context';
 
 const LevelContent = () => {
     const gameContext = useContext(gameSettingsContext)
-    
 
     return (
         <div className="wrapper-main">
@@ -14,31 +13,34 @@ const LevelContent = () => {
                 gameContext.setGameSettings({
                 rows: 8,
                 columns: 8,
-                winner: false,
+                winner: null,
                 gameTime: 600,
                 mines: 10,
                 flags: 10,
                 level: 1,
+                gameStart: false
             })}} buttonText="Легкий"/>
                 <LevelButton onClick={() => {           
                 gameContext.setGameSettings({
                 rows: 16,
                 columns: 16,
-                winner: false,
+                winner: null,
                 gameTime: 2400,
-                mines: 25,
-                flags: 25,
+                mines: 60,
+                flags: 60,
                 level: 2,
+                gameStart: false
             })}} buttonText="Средний"/>
                 <LevelButton onClick={() => {
                 gameContext.setGameSettings({
                 rows: 32,
                 columns: 32,
-                winner: false,
+                winner: null,
                 gameTime: 6000,
-                mines: 40,
-                flags: 40,
+                mines: 100,
+                flags: 100,
                 level: 3,
+                gameStart: false
             })}} buttonText="Сложный"/>
             </div>
         </div>

@@ -14,6 +14,7 @@ const App = () => {
   const [isNewUser, setNewUser] = useState(true)
   const [gameSettings, setGameSettings] = useState({})
 
+
   useEffect(() => {
     if (localStorage.getItem('login')) {
       setLogin(true)

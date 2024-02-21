@@ -1,39 +1,62 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { gameSettingsContext } from '../../contexts/Context';
 import GameButton from './GameButton';
 
 const GameBoard = () => {
-    const gameContext = useContext(gameSettingsContext)
+    const gameContext = useContext(gameSettingsContext);
+    const gameSettings = gameContext.gameSettings;
     const [squares, setSquares] = useState([])
+    const [firstClick, setFirstClick] = useState(true);
+    const [flags, setFlags] = useState(gameSettings.flags)
+    const [mines, setMines] = useState(gameSettings.mines)
 
-    useEffect(() => {
-        if (squares.length < gameContext.gameSettings.columns * gameContext.gameSettings.rows) {
-            for (let i = 0; i < gameContext.gameSettings.columns * gameContext.gameSettings.rows; i++) {
-                setSquares(prevSquares => [
-                    ...prevSquares,
-                    {
-                        id: i + 1,
-                        isMined: Math.random() < gameContext.gameSettings.mines / 100,
-                        isRevealed: false,
-                        isFlagged: false,
-                      // Добавьте другие свойства по мере необходимости
-                    }
-                ]);              
-            }
+    const gameStart = () => {
+        gameContext.setGameSettings({
+            ...gameSettings, gameStart: true
+        })
+        let squaresArray = [];
+        for (let i = 0; i < gameSettings.columns * gameSettings.rows; i++) {
+            squaresArray.push({
+                id: i + 1,
+                isMined: false,
+                isRevealed: false,
+                isFlagged: false,
+                value: 0,
+                col: Math.floor((i % gameSettings.rows)),
+                row: Math.floor((i / gameSettings.columns))
+            });
         }
-    }, [gameContext.gameSettings.columns, gameContext.gameSettings.rows, squares, gameContext.gameSettings.mines])
+        setSquares(squaresArray)
+    };
+    
 
     return (
+        squares.length === 0 && gameSettings.columns !== undefined ?
+        <div className="wrapper-main">
+            <button className='game-board__button-start' onClick={gameStart}>Начать</button>
+        </div>
+        :
         <div className="game-board-content">
-            <div className='game-board' style={{
-            gridTemplateColumns: `repeat(${gameContext.gameSettings.columns}, 1fr)`,
-            gridTemplateRows: `repeat(${gameContext.gameSettings.rows}, 1fr)`}}
-            >
-                {squares.map((square) => {
-                    return(
-                        <GameButton key={square.id} value={square.isMined ? 'mine' : 'no'} onClick={null}/>
-                    )
-                })}
+            <div className="game-board" style={{
+                gridTemplateColumns: `repeat(${gameSettings.columns}, minmax(0, 1fr))`,
+                gridTemplateRows: `repeat(${gameSettings.rows}, minmax(0, 1fr))`
+                }}>
+                    {squares.map(square => {
+                        return (
+                            <GameButton 
+                            key={square.id} 
+                            square={square} 
+                            firstClick={firstClick} 
+                            setFirstClick={setFirstClick}
+                            squares={squares}
+                            setSquares={setSquares}
+                            setFlags={setFlags}
+                            flags={flags}
+                            setMines={setMines}
+                            mines={mines}
+                            />
+                        )
+                    })}
             </div>
         </div>
     );

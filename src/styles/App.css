@@ -166,8 +166,9 @@ header h2 {
   border-radius: 8px;
 }
 .block-level__choose h2{
-font-size: 2em;
-color: white;
+  font-size: 2em;
+  color: white;
+  text-align: center;
 }
 .block-level__button {
   width: 100%;
@@ -230,33 +231,86 @@ color: white;
   background-color: var(--hover-color);
 }
 .error-picture {
-  width: 10%;
-  height: 20%;
+  width: 150px;
+  height: 150px;
   animation: up-to-down 2s infinite alternate-reverse linear 2s;
 }
 .game-board-content {
-  height: 90%;
+  height: unset;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  
 }
 .game-board {
   display: grid;
-  height: 80%;
+  height: 70vh;
   width: 80%;
 }
-.game-board__button {
+.game-board__winner {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition-duration: 0.4s;
-  background-color: transparent;
+  height: 10vh;
+  width: 100%;
 }
-.game-board__button:hover {
+.game-board__winner-lose {
+  font-size: 4vh;
+  color: red;
+}
+.game-board__winner-null {
+  font-size: 4vh;
+  color: transparent;
+}
+.game-board__winner-win {
+  font-size: 4vh;
+  color: green;
+}
+.game-board__mine {
+  height: 40%;
+  width: 40%;
+}
+.game-board__mine-hidden {
+  height: 40%;
+  width: 40%;
+  opacity: 0;
+}
+.game-board__button-start {
+  border: 3px solid var(--border-color);
+  font-size: 4vh;
+  padding: 5px 10px;
+  width: 20%;
+  height: 20%;
+  border-radius: 8px;
+  background-color: transparent;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.game-board__button-start:hover {
+  background-color: var(--hover-color);
+  color: white;
+  border-color: 3px solid transparent;
+}
+.game-button {
+  background-color: transparent;
+  transition-duration: 0.4s;
+  border: 2px solid var(--border-color);
+  cursor: pointer;
+  color: transparent;
+}
+.game-button:hover {
   background-color: var(--hover-color);
 }
-
+.game-button__revelead {
+  transition-duration: 0.4s;
+  background-color: var(--main-color);
+  color: white;
+}
+.game-button__mine-revelead {
+    transition-duration: 0.4s;
+  background-color: red;
+}
 
 
 @keyframes up-to-down {
