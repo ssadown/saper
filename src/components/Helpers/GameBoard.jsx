@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { gameSettingsContext } from '../../contexts/Context';
 import GameButton from './GameButton';
 
@@ -9,6 +9,7 @@ const GameBoard = () => {
     const [firstClick, setFirstClick] = useState(true);
     const [flags, setFlags] = useState(gameSettings.flags)
     const [mines, setMines] = useState(gameSettings.mines)
+    const [notMinedBlock, setNotMinedBlock] = useState(null)
 
     const gameStart = () => {
         gameContext.setGameSettings({
@@ -28,6 +29,17 @@ const GameBoard = () => {
         }
         setSquares(squaresArray)
     };
+    
+    useEffect(() => {
+        if (!gameSettings.winner) {
+            if (gameContext.gameSettings.mines === 0 || notMinedBlock === 0) {
+                gameContext.setGameSettings((prevSettings) => ({
+                    ...prevSettings,
+                    winner: true
+                }))
+            }
+        }
+    })
     
 
     return (
@@ -54,6 +66,8 @@ const GameBoard = () => {
                             flags={flags}
                             setMines={setMines}
                             mines={mines}
+                            notMinedBlock={notMinedBlock}
+                            setNotMinedBlock={setNotMinedBlock}
                             />
                         )
                     })}
