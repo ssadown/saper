@@ -121,7 +121,7 @@ const GameButton = (props) => {
         <button 
             onContextMenu={contextMenuOff} 
             onAuxClick={flagClick} 
-            className={square.isMined && square.isRevealed ? 'game-button__mine-revelead' : square.isRevealed ? 'game-button__revelead': 'game-button'} 
+            className={square.isFlagged && square.isMined && square.isRevealed ? 'game-button__revelead' : square.isMined && square.isRevealed ? 'game-button__mine-revelead' : square.isRevealed ? 'game-button__revelead': 'game-button'} 
             disabled={square.isRevealed || gameContext.gameSettings.winner === false || square.isFlagged || gameContext.gameSettings.winner === true} 
             onClick={props.firstClick ? firstSquareClick : squareClick}
         >    
@@ -133,7 +133,17 @@ const GameButton = (props) => {
                 <img className={square.isRevealed ? 'game-board__mine' : 'game-board__mine-hidden'} 
                 src={Mine} alt='mine'/> : 
                 square.value === 0 ? '' :
-                square.value 
+                <p className={
+                    square.value === 1 ? 'value-1' :
+                    square.value === 2 ? 'value-2' :
+                    square.value === 3 ? 'value-3' :
+                    square.value === 4 ? 'value-4' :
+                    square.value === 5 ? 'value-5' :
+                    square.value === 6 ? 'value-6' :
+                    square.value === 7 ? 'value-7' :
+                    square.value === 8 ? 'value-8' :
+                    ''
+                }>{square.value}</p> 
                 }
         </button>
     );

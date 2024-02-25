@@ -311,6 +311,50 @@ header h2 {
     transition-duration: 0.4s;
   background-color: red;
 }
+.value-1 {
+  color: blue;
+  font-size: 3vh;
+}
+.value-2 {
+  color: green;
+  font-size: 3vh;
+}
+.value-3 {
+  color: red;
+  font-size: 3vh;
+}
+.value-4 {
+  color: darkblue;
+  font-size: 3vh;
+}
+.value-5 {
+  color: goldenrod;
+  font-size: 3vh;
+}
+.value-6 {
+  color: aquamarine;
+  font-size: 3vh;
+}
+.value-7 {
+  color: black;
+  font-size: 3vh;
+}
+.value-8 {
+  color: white;
+  font-size: 3vh;
+}
+.try-again {
+  color: black;
+  font-size: 3vh;
+  padding: 5px 10px;
+  border-radius: 16px;
+  text-decoration: none;
+  transition-duration: 0.4s;
+}
+.try-again:hover {
+  color: white;
+  background-color: var(--hover-color);
+}
 
 
 @keyframes up-to-down {

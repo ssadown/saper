@@ -62,9 +62,15 @@ const GameTimer = () => {
     else {
         return (
             <div className='game-timer'>
-                {winner === false || winner === null ? <h2 className={winner === null ? 'game-board__winner-null' : 'game-board__winner-lose'}>Вы проиграли!</h2> : <h2 className='game-board__winner-win'>Вы победили!</h2>}
+                {winner === false || winner === null ?
+                    <h2 className={winner === null ? 'game-board__winner-null' : 'game-board__winner-lose'}>Вы проиграли!</h2> 
+                    :
+                    <h2 className='game-board__winner-win'>Вы победили!</h2>}
                 <h1>{formatTime(seconds)}</h1>
-                <h2>Осталось флажков: {flags.toString().padStart(2, '0')}</h2>
+                {winner === false || winner === true ?
+                    <Link to='/' className='try-again'>Ещё раз</Link> :
+                    <h2>Осталось флажков: {flags.toString().padStart(2, '0')}</h2>
+                }
             </div>
         );
     }
