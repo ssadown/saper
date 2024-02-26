@@ -6,6 +6,7 @@ import LevelPage from './LevelPage';
 import LeaderPage from './LeaderPage';
 import { loginContext, leaderDashboardContext, currentUserContext, gameSettingsContext } from './../contexts/Context';
 import GamePage from './GamePage';
+import CustomLevelPage from './CustomLevelPage';
 
 const App = () => {
   const [isLogin, setLogin] = useState(false)
@@ -38,6 +39,7 @@ const App = () => {
                 <Route exact path="/" element={<LevelPage/>}/>
                 <Route exact path="/leader" element={<LeaderPage/>}/>
                 <Route exact path="/game" element={<GamePage/>}/>
+                <Route exact path="/custom" element={<CustomLevelPage/>}/>
                 <Route exact path="*" element={<PageNotFound/>}/>
               </Routes>
             </BrowserRouter>

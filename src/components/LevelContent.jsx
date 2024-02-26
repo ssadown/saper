@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import LevelButton from './Helpers/LevelButton';
 import { gameSettingsContext } from '../contexts/Context';
+import { Link } from 'react-router-dom';
 
 const LevelContent = () => {
     const gameContext = useContext(gameSettingsContext)
@@ -18,7 +19,8 @@ const LevelContent = () => {
                 mines: 10,
                 flags: 10,
                 level: 1,
-                gameStart: false
+                gameStart: false,
+                setWin: false
             })}} buttonText="Легкий"/>
                 <LevelButton onClick={() => {           
                 gameContext.setGameSettings({
@@ -29,7 +31,8 @@ const LevelContent = () => {
                 mines: 60,
                 flags: 60,
                 level: 2,
-                gameStart: false
+                gameStart: false,
+                setWin: false
             })}} buttonText="Средний"/>
                 <LevelButton onClick={() => {
                 gameContext.setGameSettings({
@@ -40,8 +43,10 @@ const LevelContent = () => {
                 mines: 100,
                 flags: 100,
                 level: 3,
-                gameStart: false
+                gameStart: false,
+                setWin: false
             })}} buttonText="Сложный"/>
+            <Link className='text-href' to='/custom'>Свой уровень</Link>
             </div>
         </div>
     );

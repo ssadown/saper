@@ -40,7 +40,6 @@ const GameButton = (props) => {
                     minesCount++;
                 }
         })
-        
         let updatedSquares = squares.map(s => {
             if (s.id === square.id) {
                 return { ...s, isRevealed: true, value: minesCount };
@@ -48,7 +47,54 @@ const GameButton = (props) => {
             return s;
         });
         props.setSquares(updatedSquares);
-    };
+    
+const updatedNeighbors = neighbors.filter(neighbor => {
+    const neighborSquare = squares.find(el => el.row === neighbor.row && el.col === neighbor.col);
+    if (neighborSquare === undefined) {
+        return false;
+    }
+    if (neighborSquare.isMined) {
+        return false;
+    }
+    if (!neighborSquare.isMined && !neighborSquare.isRevealed) {
+        props.setNotMinedBlock((prevNumber) => prevNumber - 1)
+    }
+    return true;
+});
+
+updatedNeighbors.forEach(neighbor => {
+    const neighborSquare = squares.find(el => el.row === neighbor.row && el.col === neighbor.col);
+    if (neighborSquare.isRevealed) {
+        return;
+    }
+    neighborSquare.isRevealed = true;
+    props.setSquares(updatedSquares)
+
+    // Дополнительная логика для подсчета количества мин вокруг соседних клеток
+    let minesCount = 0;
+    const neighborNeighbors = [
+        { row: neighbor.row - 1, col: neighbor.col - 1 },
+        { row: neighbor.row - 1, col: neighbor.col },
+        { row: neighbor.row - 1, col: neighbor.col + 1 },
+        { row: neighbor.row, col: neighbor.col - 1 },
+        { row: neighbor.row, col: neighbor.col + 1 },
+        { row: neighbor.row + 1, col: neighbor.col - 1 },
+        { row: neighbor.row + 1, col: neighbor.col },
+        { row: neighbor.row + 1, col: neighbor.col + 1 },
+    ];
+    neighborNeighbors.forEach(neighborNeighbor => {
+        const {row , col } = neighborNeighbor
+            const neighborNeighborSquare = squares.find(el => el.row === row && el.col === col);
+            if (neighborNeighborSquare === undefined) {
+                return
+            }
+            if (neighborNeighborSquare.isMined) {
+                minesCount++;
+            }
+    });
+    neighborSquare.value = minesCount;
+    });
+};
 
     const firstSquareClick = () => {
         let totalMines = 0;
@@ -134,14 +180,14 @@ const GameButton = (props) => {
                 src={Mine} alt='mine'/> : 
                 square.value === 0 ? '' :
                 <p className={
-                    square.value === 1 ? 'value-1' :
-                    square.value === 2 ? 'value-2' :
-                    square.value === 3 ? 'value-3' :
-                    square.value === 4 ? 'value-4' :
-                    square.value === 5 ? 'value-5' :
-                    square.value === 6 ? 'value-6' :
-                    square.value === 7 ? 'value-7' :
-                    square.value === 8 ? 'value-8' :
+                    square.value === 1 ? 'value value-1' :
+                    square.value === 2 ? 'value value-2' :
+                    square.value === 3 ? 'value value-3' :
+                    square.value === 4 ? 'value value-4' :
+                    square.value === 5 ? 'value value-5' :
+                    square.value === 6 ? 'value value-6' :
+                    square.value === 7 ? 'value value-7' :
+                    square.value === 8 ? 'value value-8' :
                     ''
                 }>{square.value}</p> 
                 }

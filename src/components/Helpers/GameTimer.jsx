@@ -3,6 +3,7 @@ import { formatTime } from './../../Formater/formatTime';
 import { Link } from 'react-router-dom';
 import errorPicture from '../../images/error.png'
 import { currentUserContext, gameSettingsContext, leaderDashboardContext } from '../../contexts/Context';
+import TimerButton from './TimerButton';
 
 const GameTimer = () => {
     const gameContext = useContext(gameSettingsContext)
@@ -12,6 +13,7 @@ const GameTimer = () => {
     const flags = gameContext.gameSettings.flags
     const mines = gameContext.gameSettings.mines
     const gameStart = gameContext.gameSettings.gameStart
+    const setWin = gameContext.gameSettings.setWin
     const currentUser = useContext(currentUserContext)
 
     useEffect(() => {
@@ -19,7 +21,7 @@ const GameTimer = () => {
             if (seconds > 0 && winner === null && gameStart) {
                 setSeconds(prevSeconds => prevSeconds - 1);
             }
-            if (seconds === 0) {
+            if (seconds === 0 && gameContext.gameSettings.winner !== false) {
                 gameContext.setGameSettings({
                     ...gameContext.gameSettings, winner: false
                 })
@@ -30,7 +32,7 @@ const GameTimer = () => {
         };
     });
     useEffect(() => {
-        if (winner === true) {
+        if (winner === true && !setWin) {
             let userRecord = JSON.parse(localStorage.getItem('leaderDashboard'));
             console.log(userRecord);
             const updatedUserRecord = userRecord.map(user => {
@@ -47,6 +49,9 @@ const GameTimer = () => {
             });
             leaderDashboard.setLeaderDashboard(updatedUserRecord)
             localStorage.setItem('leaderDashboard', JSON.stringify(updatedUserRecord));
+            gameContext.setGameSettings({
+                ...gameContext.gameSettings, setWin: true
+            })
         }
     })
 
@@ -68,7 +73,19 @@ const GameTimer = () => {
                     <h2 className='game-board__winner-win'>Вы победили!</h2>}
                 <h1>{formatTime(seconds)}</h1>
                 {winner === false || winner === true ?
-                    <Link to='/' className='try-again'>Ещё раз</Link> :
+                    <TimerButton onClick={() => {
+                        gameContext.setGameSettings({
+                            rows: 0,
+                            columns: 0,
+                            winner: null,
+                            gameTime: 0,
+                            mines: 0,
+                            flags: 0,
+                            level: 0,
+                            gameStart: false,
+                            setWin: false
+                        })
+                    }}/> :
                     <h2>Осталось флажков: {flags.toString().padStart(2, '0')}</h2>
                 }
             </div>
